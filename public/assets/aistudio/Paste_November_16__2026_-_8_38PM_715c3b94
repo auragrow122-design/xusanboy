@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2f80ed">
+  <title>Aloqa — Maktab platformasi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+:root{--pri:#2f80ed;--pri-d:#1f66c9;--pri-l:#e8f1fd;--bg:#f3f6fb;--card:#fff;--text:#1f2a37;--muted:#6b7a90;--line:#e3e9f2;--ok:#27ae60;--ok-l:#e6f6ec;--warn:#f2994a;--warn-l:#fff3e6;--err:#eb5757;--err-l:#fdeaea;--r:14px;--sh:0 2px 10px rgba(31,42,55,.06)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{min-height:100vh;background:var(--bg);color:var(--text);font:16px/1.55 Inter,"Segoe UI",Roboto,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+section[id]{scroll-margin-top:84px}.wrap{max-width:1140px;margin:0 auto;padding:0 20px}.mono{font-size:12px;font-weight:600;letter-spacing:.03em}
+/* Tugmalar */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border:1px solid transparent;border-radius:10px;font-weight:700;font-size:15px;transition:background .2s,box-shadow .2s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--pri);color:#fff}.btn-primary:hover{background:var(--pri-d);box-shadow:0 4px 12px rgba(47,128,237,.35)}
+.btn-ghost{background:#fff;border-color:var(--pri);color:var(--pri)}.btn-ghost:hover{background:var(--pri-l)}
+.btn.full{width:100%;margin-top:12px}.btn-lg{padding:14px 28px;font-size:16px}
+/* Sarlavha */
+.nav-wrap{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.nav{position:relative;max-width:1140px;margin:0 auto;height:64px;padding:0 20px;display:flex;align-items:center;gap:28px;background:none;border:0;box-shadow:none;border-radius:0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;color:var(--pri);letter-spacing:-.02em}
+.brand::before{content:"A";width:34px;height:34px;border-radius:10px;background:var(--pri);color:#fff;display:grid;place-items:center;font-size:19px}
+.nav-links{display:flex;gap:6px;margin-left:12px}.nav-links a{padding:8px 14px;border-radius:8px;font-weight:600;font-size:15px;color:#455468}.nav-links a:hover{background:var(--pri-l);color:var(--pri)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.nav .btn-ghost{background:var(--pri);color:#fff;border-color:var(--pri)}.nav .btn-ghost:hover{background:var(--pri-d)}
+.menu-btn{display:none;width:40px;height:40px;padding:10px 9px;border:1px solid var(--line);border-radius:10px;background:#fff;flex-direction:column;justify-content:space-between}
+.menu-btn i{display:block;height:2px;background:var(--text);border-radius:2px}
+.mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:6px 20px 12px}.mobile-menu a{display:block;padding:12px 4px;font-weight:600;border-bottom:1px solid var(--line)}
+.nav.menu-open .mobile-menu{display:block}
+/* Keraksiz bezaklar yashiriladi (dizayn soddalashtirildi) */
+.loader,.cursor,.progress-bar,.shape,.pill-inline,.badge,.band,.wordmark,.ripple,.phone-wrap,.st-line,.fline i,.arr,.fline.l2{display:none!important}
+.mag,.step-card,.ticker-skew,.hero-title{transform:none!important}
+.sec-head,.step-card .big,.live-right,.stat b,.hero-lead,.aud-ic,.hero-title{translate:none!important}.hero-title{opacity:1!important}
+.serif{font-style:normal;color:var(--pri)}.mono{font-size:12px;font-weight:600;letter-spacing:.03em}
+.sw,.sw i,.line,.w{display:inline}.sw i{font-style:normal}
+/* Hero */
+.hero{margin-top:24px;padding:44px 40px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh)}
+.hero-top{display:flex;gap:12px;align-items:center;color:var(--muted)}.hero-top span:first-child{padding:5px 12px;border-radius:99px;background:var(--pri-l);color:var(--pri);font-size:13px;font-weight:700}
+.hero-title{margin:16px 0 0;font-size:clamp(32px,5vw,56px);line-height:1.1;letter-spacing:-.03em;font-weight:800}.hero-title .line{display:block}.hero-title .ch{display:inline}.hero-title .serif i{color:var(--pri)}
+.hero-lead{max-width:560px;margin-top:18px;font-size:18px;color:#455468}.hero-lead b{color:var(--text)}.hero-lead em{font-style:normal;color:var(--pri);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:#455468}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:24px}.link-arrow{color:var(--pri);font-weight:700;font-size:15px}.link-arrow:hover{text-decoration:underline}
+.ticker{max-width:1140px;margin:16px auto 0;padding:0 20px}.ticker-track{display:flex;flex-wrap:wrap;gap:8px}
+.ticker-item{padding:7px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;font-size:13px;color:#455468}.ticker-item b{margin-left:4px;color:var(--ok)}.ticker-item:nth-child(n+6){display:none}
+/* Bo'limlar */
+.sec.wrap{padding-top:56px}.sec-head{margin-bottom:24px}.sec-head h2,.cta h2{font-size:clamp(26px,3.2vw,34px);letter-spacing:-.02em;line-height:1.2}
+.kicker{display:block;margin-bottom:6px;color:var(--pri);text-transform:uppercase;letter-spacing:.06em}
+.fill-sec{margin-top:56px}.fill-in{display:block}.fill-text{max-width:820px;font-weight:700;font-size:clamp(24px,3.4vw,36px);line-height:1.3;letter-spacing:-.02em}.fill-text .sf.hl{color:var(--pri)}
+.fill-flow{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}.node{padding:10px 18px;border-radius:10px;background:var(--pri-l);color:var(--pri);font-weight:700;font-size:14px}.fline{width:28px;height:2px;background:#b9c9e0}
+section.live{margin-top:56px}.live-card{display:grid;grid-template-columns:1fr 1.3fr;gap:30px;padding:28px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.live-label{color:var(--pri);text-transform:uppercase}.live-num{font-size:56px;font-weight:800;line-height:1.1;color:var(--pri)}.live-num small{font-size:22px;color:var(--muted);font-weight:600}.live-text{margin-top:6px;color:var(--muted)}
+.cells{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}.cell{display:block;aspect-ratio:1;border-radius:6px;background:#dde6f3}.cell.on{background:var(--ok)}
+.legend{display:flex;justify-content:space-between;margin:12px 0 8px;color:var(--ok);font-size:14px}.legend .off{color:var(--warn)}.live-right>.mono{color:var(--muted);font-weight:500}
+.aud,.rows,.stack,.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.stats{grid-template-columns:repeat(4,1fr);margin-top:56px}
+.aud-card,.row,.step-card,.stat,.st{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.aud-card{cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}.aud-card:hover,.aud-card:focus-visible{transform:translateY(-4px);border-color:var(--pri);box-shadow:0 10px 24px rgba(47,128,237,.15);outline:0}
+.aud-inner{height:100%;display:flex;flex-direction:column;gap:14px;padding:24px}.aud-inner>div:nth-child(2){flex:1}
+.aud-ic{width:52px;height:52px;display:grid;place-items:center;border-radius:14px;background:var(--pri-l);color:var(--pri)}
+.aud-ic svg,.role-emoji svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.aud-ic svg *{stroke-dasharray:none;stroke-dashoffset:0}
+.aud-tag,.tag{display:inline-block;margin-bottom:10px;padding:4px 12px;border-radius:99px;background:var(--pri-l);color:var(--pri);font-weight:700}
+.aud-card h3{margin-bottom:8px;font-size:20px;line-height:1.25}.aud-card p{color:var(--muted)}
+.row{display:flex;flex-direction:column;gap:8px;padding:22px}.row .n{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--pri);color:#fff;font-weight:800;font-size:14px}.row h3{font-size:18px}.row p{color:var(--muted)}
+.story{margin-top:56px}.story-pin{display:block}.story-grid{display:block}.story h2{font-size:clamp(26px,3.2vw,34px);letter-spacing:-.02em;line-height:1.2;margin-bottom:24px}
+.st-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.st{padding:22px;border-top:4px solid var(--pri);opacity:1!important;transform:none!important}
+.st span.mono{display:inline-block;margin-bottom:10px;padding:3px 10px;border-radius:8px;background:var(--pri-l);color:var(--pri)}.st h3{margin-bottom:6px;font-size:18px}.st p{max-height:none;color:var(--muted)}.demo-note{margin-top:12px;color:var(--muted);font-weight:500}
+.step-card{position:relative;display:block;padding:22px;overflow:hidden}.step-card h3{margin-bottom:6px;font-size:18px}.step-card p{color:var(--muted)}
+.step-card .big{position:absolute;right:16px;top:6px;font-size:64px;font-weight:800;color:var(--pri-l);line-height:1}
+.stat{padding:22px;text-align:center}.stat b{display:block;font-size:38px;color:var(--pri);line-height:1.1}.stat .mono{color:var(--muted);font-size:14px}
+.faq{display:grid;gap:10px}.faq-item{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.faq-q{width:100%;display:flex;align-items:center;gap:12px;padding:18px 20px;border:0;background:none;text-align:left;font-weight:700;font-size:17px}
+.faq-q .n{color:var(--pri);font-size:13px}.faq-q .pm{margin-left:auto;width:22px;height:22px;position:relative;flex:none}
+.faq-q .pm::before,.faq-q .pm::after{content:"";position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:var(--pri);transition:transform .25s}.faq-q .pm::after{transform:rotate(90deg)}
+.faq-item.open .pm::after{transform:rotate(0)}.faq-item.open{border-color:var(--pri)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}.faq-item.open .faq-a{grid-template-rows:1fr}.faq-a>div{overflow:hidden}.faq-a p{padding:0 20px 18px 46px;color:#455468}
+.cta{margin-top:64px;background:var(--pri);color:#fff;text-align:center;padding:56px 0 22px}.cta h2{margin-bottom:10px}.cta p{opacity:.9;margin-bottom:22px}.cta .btn-primary{background:#fff;color:var(--pri)}
+.foot{display:flex;justify-content:space-between;gap:8px;margin-top:44px;padding-top:18px;border-top:1px solid rgba(255,255,255,.25);font-weight:500;opacity:.85}
+/* Modal */
+.overlay{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;background:rgba(31,42,55,.55)}
+.overlay.show{display:flex;animation:fade .2s}.overlay.closing{animation:fadeOut .25s forwards}@keyframes fade{from{opacity:0}}@keyframes fadeOut{to{opacity:0}}
+.modal{position:relative;width:min(560px,100%);max-height:92vh;padding:26px;overflow-y:auto;overflow-x:hidden;background:#fff;border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.3);animation:pop .3s}
+@keyframes pop{from{opacity:0;transform:translateY(16px)}}.screen{animation:screenIn .3s both}.screen.back{animation-name:screenInBack}.screen.static,.screen.static .student{animation:none}
+@keyframes screenIn{from{opacity:0;transform:translateX(16px)}}@keyframes screenInBack{from{opacity:0;transform:translateX(-16px)}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.modal-head h2{margin-bottom:4px;font-size:24px;line-height:1.2;color:var(--text)}
+.subtle{color:var(--muted);font-size:14px}.close{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:var(--bg);font-size:22px;line-height:1}.close:hover{background:var(--line)}
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}.role-grid.two{grid-template-columns:repeat(2,1fr)}
+.role{display:flex;flex-direction:column;gap:12px;padding:18px;text-align:left;border:1px solid var(--line);border-radius:14px;background:#fff;transition:.2s}
+.role:hover{border-color:var(--pri);background:var(--pri-l)}.role b{display:block;font-size:16px}.role span.sub{color:var(--muted);font-size:13px}
+.role-emoji{width:48px;height:48px;display:grid;place-items:center;border-radius:12px;background:var(--pri-l);color:var(--pri)}
+.field{margin:16px 0}.field label{display:block;margin-bottom:6px;font-size:14px;font-weight:600}
+.field input,.search{width:100%;padding:12px 14px;outline:0;border:1px solid #cfd8e6;border-radius:10px;background:#fff;transition:.2s}.search{margin-top:16px}
+.field input:focus,.search:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(47,128,237,.18)}.field input.shake{animation:shake .4s;border-color:var(--err)}
+@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+.back{padding:14px 0 0;border:0;background:none;color:var(--pri);font-weight:700}.back:hover{text-decoration:underline}
+.list{display:grid;gap:8px;margin-top:16px}.list.scroll{max-height:340px;overflow-y:auto;padding-right:4px}
+.student{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}.student:hover{background:var(--bg)}
+.student-pic{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--pri-l);color:var(--pri);font-weight:800;font-size:14px}.student-pic.big{width:54px;height:54px;font-size:17px}
+.student-info{flex:1;min-width:0}.student-info b{display:block;font-size:15px}.student-info small{color:var(--muted)}
+.status{color:var(--muted);font-size:13px}.status.present{color:var(--ok);font-weight:700}
+.check-btn{padding:8px 14px;border:1px solid var(--pri);border-radius:8px;background:#fff;color:var(--pri);font-size:13px;font-weight:700;transition:.2s}
+.check-btn:hover:not(:disabled){background:var(--pri);color:#fff}.check-btn:disabled{opacity:.6;cursor:default}.check-btn.selected{background:var(--pri);color:#fff}
+.notice{margin:14px 0;padding:12px 14px;border-radius:10px;background:var(--pri-l);color:#34507a;font-size:14px}
+.camera-box{position:relative;width:100%;aspect-ratio:4/3;margin-top:16px;overflow:hidden;border-radius:14px;background:#111}.camera-box video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.camera-guide{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}.face-frame{width:min(72%,260px);height:82%;border:3px dashed #fff;border-radius:48% 48% 42% 42%;box-shadow:0 0 0 999px rgba(0,0,0,.4)}
+.scan-line{position:absolute;left:14%;right:14%;height:2px;background:var(--pri);box-shadow:0 0 14px var(--pri);animation:scan 2.6s ease-in-out infinite}@keyframes scan{0%,100%{top:14%}50%{top:84%}}
+.camera-hint{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 12px;border-radius:10px;color:#fff;background:rgba(0,0,0,.6);text-align:center;font-size:13px}
+.countdown{min-height:28px;margin:12px 0;color:var(--pri);text-align:center;font-weight:700}
+.scan-prog{height:8px;margin-top:14px;border-radius:99px;background:var(--line);overflow:hidden}.scan-prog i{display:block;width:0;height:100%;background:var(--pri);transition:width .25s linear}
+.toast{position:fixed;z-index:100;bottom:26px;left:50%;padding:12px 20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;border-radius:10px;color:#fff;background:#1f2a37;font-weight:600;font-size:14px;transition:.25s}.toast.show{transform:translate(-50%,0);opacity:1}
+.hub-reg{width:100%;margin-top:18px;display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;border:0;border-radius:14px;color:#fff;background:var(--pri)}.hub-reg:hover{background:var(--pri-d)}.hub-reg.shake{animation:shake .4s}
+.hub-reg b{display:block;font-size:17px}.hub-reg small{opacity:.85}.hub-step{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--pri);font-weight:800}.hub-go{margin-left:auto;font-size:22px}
+.reg-done{margin-top:18px;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--ok-l)}.reg-done b{display:block}.reg-done small{color:var(--muted)}
+.reg-ok{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--ok);color:#fff;font-weight:800}.reg-out{margin-left:auto;padding:7px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;font-weight:700}
+.hub-label{margin:20px 0 -6px;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.kid-card{margin-top:18px;border:1px solid var(--line);border-radius:16px;overflow:hidden}.kid-top{display:flex;align-items:center;gap:14px;padding:16px}.kid-top b{display:block;font-size:18px}.kid-top small{color:var(--muted)}
+.kid-status{display:flex;align-items:center;gap:14px;padding:18px 16px}.kid-card.is-out .kid-status{color:var(--warn);background:var(--warn-l)}.kid-card.is-in .kid-status{color:var(--ok);background:var(--ok-l)}
+.kid-status small{display:block;color:var(--muted);font-size:13px}.kid-status strong{display:block;font-size:22px;line-height:1.2;color:var(--text)}.kid-status em{font-style:normal;font-size:13px;color:var(--muted)}.kid-emoji{margin-left:auto;font-size:34px}
+.pulse-dot{width:12px;height:12px;flex:none;border-radius:50%;background:currentColor}.hub-actions{display:flex;gap:10px;margin-top:14px}.hub-actions .btn{flex:1}
+.days{display:flex;gap:6px;margin:18px 0 12px}.day{flex:1;min-width:0;padding:6px 2px 9px;border:1px solid var(--line);border-radius:10px;background:#fff;font-weight:700;font-size:14px;text-align:center}
+.day small{display:block;height:12px;font-size:10px;color:var(--pri)}.day.active{background:var(--pri);border-color:var(--pri);color:#fff}.day.active small{color:#fff}
+.lesson{display:flex;align-items:center;gap:12px;padding:11px 12px;margin-bottom:8px;border:1px solid var(--line);border-radius:10px}.lesson .ln{width:30px;height:30px;flex:none;display:grid;place-items:center;border-radius:8px;background:var(--pri-l);color:var(--pri);font-weight:800}
+.lesson b{display:block}.lesson small{color:var(--muted)}.lesson.now{border-color:var(--pri);background:var(--pri-l)}.lesson.now .ln{background:var(--pri);color:#fff}.lesson .live{margin-left:auto;padding:3px 10px;border-radius:99px;background:var(--pri);color:#fff;font-size:12px;font-weight:700}
+.free{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+.arrive{width:100%;margin-top:16px;display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;border:1px solid var(--pri);border-radius:14px;background:var(--pri-l)}.arrive:hover{background:#dbe9fc}
+.arrive b{display:block}.arrive small{color:var(--muted);font-size:13px}.arrive-ic{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:12px;background:var(--pri);color:#fff;font-weight:800}.arrive-ic svg{width:22px;height:22px}.arrive.done{border-color:var(--line);background:var(--ok-l)}.arrive.done .arrive-ic{background:var(--ok)}
+.err-card,.ok-card{margin-top:18px;padding:24px 20px;text-align:center;border-radius:16px}.err-card{background:var(--err-l)}.ok-card{background:var(--ok-l)}
+.err-ic,.ok-ic{width:60px;height:60px;margin:0 auto 12px;display:grid;place-items:center;border-radius:50%;color:#fff;font-size:30px;font-weight:800}.err-ic{background:var(--err)}.ok-ic{background:var(--ok)}.ok-ic svg{width:30px;height:30px}
+.err-card h3,.ok-card h3{margin-bottom:6px;font-size:21px}.err-card p,.ok-card p{color:#455468;font-size:14.5px}
+@media(max-width:900px){.live-card{grid-template-columns:1fr}.aud,.rows,.stack,.st-wrap{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.hero{padding:30px 22px}}
+@media(max-width:680px){.nav-links{display:none}.menu-btn{display:flex}.nav .btn-ghost{padding:9px 16px}.role-grid,.role-grid.two{grid-template-columns:1fr}.modal{padding:20px}.student{flex-wrap:wrap}.check-btn{margin-left:54px}.foot{flex-direction:column}.faq-a p{padding-left:20px}.cells{gap:4px}}
+  
+/* Uchta tugma — sahifaning eng tepasida */
+main{display:flex;flex-direction:column}main>*{width:100%}
+#kim{order:-1;padding-top:22px}#kim .sec-head{display:none}
+.aud{gap:12px}
+.aud-card{background:var(--pri);border-color:var(--pri);border-radius:14px;box-shadow:0 4px 14px rgba(47,128,237,.3)}
+.aud-card:hover,.aud-card:focus-visible{background:var(--pri-d);border-color:var(--pri-d);transform:translateY(-2px);box-shadow:0 8px 20px rgba(47,128,237,.4)}
+.aud-inner{flex-direction:row;align-items:center;gap:14px;padding:14px 18px}.aud-inner>div:nth-child(2){flex:1}
+.aud-ic{width:46px;height:46px;flex:none;background:rgba(255,255,255,.2);color:#fff}.aud-ic svg{width:26px;height:26px}
+.aud-tag{display:block;margin:0 0 2px;padding:0;background:none;border-radius:0;color:#fff;font-size:18px;font-weight:800;letter-spacing:0}
+.aud-card h3{margin:0;font-size:13px;font-weight:500;line-height:1.3;color:rgba(255,255,255,.85)}
+.aud-card p,.aud-inner>.link-arrow{display:none}
+@media(max-width:900px){.aud{grid-template-columns:repeat(3,1fr)}.aud-inner{flex-direction:column;align-items:flex-start;gap:10px}}
+@media(max-width:680px){.aud{grid-template-columns:1fr}.aud-inner{flex-direction:row;align-items:center}}
+  
+/* O'quvchi: akkauntdan chiqish tugmasi */
+.out-btn{display:block;margin:0 0 14px auto;padding:7px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--muted);font-size:13px;font-weight:700;transition:.2s}
+.out-btn:hover{background:var(--bg)}
+.out-btn.go{background:var(--ok);border-color:var(--ok);color:#fff;animation:outGlow 1s ease-in-out infinite}
+@keyframes outGlow{0%,100%{box-shadow:0 0 0 0 rgba(39,174,96,.55)}50%{box-shadow:0 0 0 9px rgba(39,174,96,0)}}
+  
+/* Ota-ona ekranida bola rasmlari */
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.photos img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
+  </style>
+</head>
+
+<body>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="l-top"><span class="l-brand">aloqa</span><span class="mono">Yuklanmoqda</span></div>
+    <div>
+      <div class="l-count"><span id="lnum">0</span><small>%</small></div>
+      <div class="l-line"><b id="lbar"></b></div>
+    </div>
+  </div>
+
+  <div class="progress-bar" id="progress"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <div class="nav-wrap">
+    <header class="nav" id="nav">
+      <div class="brand">aloqa</div>
+      <nav class="nav-links">
+        <a href="#kim">Kim uchun</a>
+        <a href="#kun">Qanday ishlaydi</a>
+        <a href="#savol">Savollar</a>
+      </nav>
+      <div class="nav-right">
+        <button class="btn btn-ghost mag" onclick="openRegister()">Kirish</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Menyu" aria-expanded="false"><i></i><i></i><i></i></button>
+      </div>
+      <div class="mobile-menu">
+        <a href="#kim" style="--k:0">Kim uchun</a>
+        <a href="#kun" style="--k:1">Qanday ishlaydi</a>
+        <a href="#savol" style="--k:2">Savollar</a>
+      </div>
+    </header>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero wrap" id="hero">
+      <span class="shape sh1" data-depth="46" aria-hidden="true"></span>
+      <span class="shape sh2" data-depth="-30" aria-hidden="true"></span>
+      <span class="shape sh3" data-depth="70" aria-hidden="true"></span>
+      <div class="hero-top mono"><span>Maktab va oila — bir jamoa</span><span>№ 2026</span></div>
+
+      <h1 class="hero-title">
+        <span class="line"><span class="w"><i style="--i:0">Farzandingizning</i></span></span>
+        <span class="line">
+          <span class="w"><i class="serif" style="--i:1">har&nbsp;kuni</i></span>
+          <span class="w"><i style="--i:2">muhim.</i></span><span class="pill-inline" aria-hidden="true"><b style="--k:0"></b><b style="--k:1"></b><b style="--k:2"></b></span>
+        </span>
+      </h1>
+
+      <div class="hero-bottom">
+        <div>
+          <p class="hero-lead"><b>Aloqa</b> — maktab davomati platformasi. Farzandingiz bugun <em>maktabga keldimi?</em> Bir qarashda biling.</p>
+          <div class="chips mono"><span class="chip">Ota-ona uchun</span><span class="chip">Maktab uchun</span></div>
+          <div class="cta-row">
+            <button class="btn btn-primary mag" onclick="openRegister()">Platformaga kirish <span class="arrow">↗</span></button>
+            <a class="link-arrow" href="#imkoniyatlar">Imkoniyatlar</a>
+          </div>
+        </div>
+        <a class="badge" href="#davomat" aria-label="Davomatga o‘tish">
+          <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#circ" textLength="486" lengthAdjust="spacing">DAVOMAT • OILA • MAKTAB • DAVOMAT • OILA • MAKTAB • </textPath></text>
+          </svg>
+          <span class="core"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-skew"><div class="ticker-track">
+        <span class="ticker-item">Madina Karimova · 5-A · 08:02 <b>keldi</b></span>
+        <span class="ticker-item">Asadbek Rahimov · 6-B · 08:05 <b>keldi</b></span>
+        <span class="ticker-item">Ziyoda Aliyeva · 4-A · 08:11 <b>keldi</b></span>
+        <span class="ticker-item">Jasur Tursunov · 7-V · 08:14 <b>keldi</b></span>
+        <span class="ticker-item">Mohira Islomova · 5-B · 08:19 <b>keldi</b></span>
+        <span class="ticker-item">Madina Karimova · 5-A · 08:02 <b>keldi</b></span>
+        <span class="ticker-item">Asadbek Rahimov · 6-B · 08:05 <b>keldi</b></span>
+        <span class="ticker-item">Ziyoda Aliyeva · 4-A · 08:11 <b>keldi</b></span>
+        <span class="ticker-item">Jasur Tursunov · 7-V · 08:14 <b>keldi</b></span>
+        <span class="ticker-item">Mohira Islomova · 5-B · 08:19 <b>keldi</b></span>
+      </div></div>
+    </div>
+
+    <!-- BU NIMA? (scroll bilan to'ladigan matn) -->
+    <section class="fill-sec" id="fill">
+      <div class="fill-in wrap">
+        <div class="kicker mono">Bu nima?</div>
+        <p class="fill-text" id="fillText">Aloqa — maktab va oila o‘rtasidagi <em>ko‘prik.</em> Maktab o‘quvchining kelganini belgilaydi, ota-ona esa farzandi bugun maktabda ekanini <em>darhol ko‘radi.</em></p>
+        <div class="fill-flow mono">
+          <span class="node">Maktab belgilaydi</span><span class="fline l1"><i></i></span>
+          <span class="node">Aloqa</span><span class="fline l2"><i></i></span>
+          <span class="node">Ota-ona ko‘radi</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- JONLI DAVOMAT -->
+    <section class="live wrap" id="davomat">
+      <div class="live-card" id="liveCard" data-io>
+        <div>
+          <div class="live-label mono">Bugungi davomat</div>
+          <div class="live-num"><span data-count="246">0</span><small>/ 300</small></div>
+          <p class="live-text">o‘quvchi bugun maktabda. Maktab holati kun davomida yangilanib boradi.</p>
+        </div>
+        <div class="live-right">
+          <div class="cells" aria-hidden="true" id="cells"></div>
+          <div class="legend mono"><span>Keldi · 82%</span><span class="off">Kelmadi · 18%</span></div>
+          <div class="mono" style="opacity:.45">Demo ma’lumot · 1 katak = 10 o‘quvchi</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KIM UCHUN -->
+    <section class="sec wrap" id="kim">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Kim uchun?</div>
+        <h2>Uch kishi — <span class="serif">bitta platforma</span></h2>
+      </div>
+      <div class="aud">
+        <article class="aud-card reveal" style="--d:0" data-cursor="Ochish" tabindex="0" role="button" onclick="openHub()" onkeydown="if(event.key==='Enter')openHub()">
+          <div class="aud-inner">
+            <div class="aud-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="100" cx="9" cy="8" r="3.2"/><path pathLength="100" d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle pathLength="100" cx="17.5" cy="9" r="2.4"/><path pathLength="100" d="M17 14.2c2.4.3 4.2 2.3 4.2 4.8"/></svg></div>
+            <div>
+              <span class="aud-tag mono">Ota-ona</span>
+              <h3>Farzandim bugun maktabga keldimi?</h3>
+              <p>Ro‘yxatdan o‘ting, farzandingizni tanlang va u bugun maktabga kelgan-kelmaganini darhol ko‘ring.</p>
+            </div>
+            <span class="link-arrow">Ota-ona bo‘limiga kirish ↗</span>
+          </div>
+        </article>
+        <article class="aud-card reveal" style="--d:1" data-cursor="Ochish" tabindex="0" role="button" onclick="renderAdminLogin()" onkeydown="if(event.key==='Enter')renderAdminLogin()">
+          <div class="aud-inner">
+            <div class="aud-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="100" d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6L12 3Z"/><path pathLength="100" d="m8.8 12.2 2.3 2.3 4.2-4.6"/></svg></div>
+            <div>
+              <span class="aud-tag mono">Maktab · Admin</span>
+              <h3>Davomat bitta ro‘yxatda</h3>
+              <p>Admin parolini kiriting va bugun kimlar kelganini, kimning davomati belgilanmaganini bir joyda ko‘ring.</p>
+            </div>
+            <span class="link-arrow">Admin paneliga kirish ↗</span>
+          </div>
+        </article>
+        <article class="aud-card reveal" style="--d:2" data-cursor="Ochish" tabindex="0" role="button" onclick="profile?hubOpen('student'):renderRegStudent()" onkeydown="if(event.key==='Enter')(profile?hubOpen('student'):renderRegStudent())">
+          <div class="aud-inner">
+            <div class="aud-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="100" cx="12" cy="12" r="9"/><path pathLength="100" d="m8 12.5 2.8 2.8 5.7-5.8"/></svg></div>
+            <div>
+              <span class="aud-tag mono">O‘quvchi</span>
+              <h3>“Keldim” — bir bosishda</h3>
+              <p>Ismingizni topib, kelganingizni belgilang. Haqiqiy tizimda buni maktab bergan QR-kod yoki karta tasdiqlaydi.</p>
+            </div>
+            <span class="link-arrow">O‘quvchilar ro‘yxati ↗</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- IMKONIYATLAR -->
+    <section class="sec wrap" id="imkoniyatlar">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Imkoniyatlar</div>
+        <h2>Maktab hayoti — <span class="serif">bitta joyda</span></h2>
+      </div>
+      <div class="rows">
+        <div class="row reveal" style="--d:0"><span class="n">01</span><h3>Davomat aniq</h3><p>O‘quvchining kelgan-kelmagan holatini qulay ko‘ring.</p><span class="arr"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        <div class="row reveal" style="--d:2"><span class="n">02</span><h3>Sodda boshqaruv</h3><p>Maktab jamoasi davomatni bitta paneldan boshqaradi.</p><span class="arr"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        <div class="row reveal" style="--d:3"><span class="n">03</span><h3>Ishonchli bog‘lanish</h3><p>Ota-ona va farzand bog‘lanishini maktab tasdiqlaydi.</p><span class="arr"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+    </section>
+
+    <!-- BIR KUN (telefon hikoyasi) -->
+    <section class="story" id="kun">
+      <div class="story-pin">
+        <div class="wrap story-grid">
+          <div class="story-left reveal">
+            <div class="kicker mono">Qanday ishlaydi</div>
+            <h2>Maktab darvozasidan <span class="serif">telefongacha</span></h2>
+            <div class="st-wrap">
+              <div class="st-line"><b></b></div>
+              <div class="st active"><span class="mono">08:02</span><h3>O‘quvchi maktabga keladi</h3><p>Ertalab o‘quvchi maktabga kirib keladi.</p></div>
+              <div class="st"><span class="mono">08:05</span><h3>Maktab davomatni belgilaydi</h3><p>Sinf ro‘yxatida kelgan o‘quvchi belgilanadi.</p></div>
+              <div class="st"><span class="mono">08:06</span><h3>Ota-ona holatni ko‘radi</h3><p>Sayt orqali — farzand maktabda ekani bir qarashda ko‘rinadi.</p></div>
+            </div>
+            <div class="demo-note mono">Demo ko‘rinish · ismlar va vaqtlar namuna</div>
+          </div>
+
+          <div class="phone-wrap" aria-hidden="true">
+            <div class="phone">
+              <div class="notch"></div>
+
+              <div class="ps active">
+                <div class="ps-bar mono"><span>08:02</span><span>Maktab</span></div>
+                <div class="school-box">
+                  <svg viewBox="0 0 260 200">
+                    <path pathLength="100" style="--k:0" d="M10 180H250"/>
+                    <rect pathLength="100" style="--k:1" x="50" y="80" width="160" height="100"/>
+                    <path pathLength="100" style="--k:2" d="M40 82 130 28 220 82"/>
+                    <rect pathLength="100" style="--k:3" x="112" y="124" width="36" height="56"/>
+                    <rect pathLength="100" style="--k:4" x="66" y="104" width="28" height="26"/>
+                    <rect pathLength="100" style="--k:5" x="166" y="104" width="28" height="26"/>
+                    <path pathLength="100" style="--k:6" d="M130 28V8l22 7-22 7"/>
+                  </svg>
+                  <span class="walker"></span>
+                </div>
+                <div class="ps-cap"><b>Madina Karimova</b><span class="mono" style="color:#6a7266">maktabga keldi · 08:02</span></div>
+              </div>
+
+              <div class="ps">
+                <div class="ps-bar mono"><span>08:05</span><span>5-A sinf</span></div>
+                <h4>Davomat</h4>
+                <ul class="att">
+                  <li><svg class="tick" viewBox="0 0 24 24"><circle pathLength="100" cx="12" cy="12" r="10"/><path pathLength="100" d="m7.5 12.5 3 3 6-6.5"/></svg>Madina K.<span class="mono">keldi</span></li>
+                  <li><svg class="tick" viewBox="0 0 24 24"><circle pathLength="100" cx="12" cy="12" r="10"/><path pathLength="100" d="m7.5 12.5 3 3 6-6.5"/></svg>Ziyoda A.<span class="mono">keldi</span></li>
+                  <li><svg class="tick" viewBox="0 0 24 24"><circle pathLength="100" cx="12" cy="12" r="10"/><path pathLength="100" d="m7.5 12.5 3 3 6-6.5"/></svg>Mohira I.<span class="mono">keldi</span></li>
+                  <li><span class="wait">…</span>Dilshod T.<span class="mono">kutilmoqda</span></li>
+                </ul>
+              </div>
+
+              <div class="ps">
+                <div class="ps-bar mono"><span>08:06</span><span>Aloqa</span></div>
+                <div class="chat-head"><span class="av">A</span><div><b>Aloqa</b><small>davomat</small></div></div>
+                <div class="typing"><i></i><i></i><i></i></div>
+                <div class="bub b1">Madina bugun maktabga keldi ✓✓<small>08:02</small></div>
+                <div class="bub b2">5-A sinf · davomat belgilandi<small>08:05</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QADAMLAR -->
+    <section class="sec wrap" id="qadamlar">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Foydalanish</div>
+        <h2>Uch qadamda <span class="serif">tayyor</span></h2>
+      </div>
+      <div class="stack">
+        <article class="step-card s1" style="--i:0">
+          <div><span class="tag mono">Qadam 1</span><h3>Profilni tanlang</h3><p>Ota-ona, o‘quvchi yoki admin sifatida kiring.</p></div>
+          <div class="big">1</div>
+        </article>
+        <article class="step-card s2" style="--i:1">
+          <div><span class="tag mono">Qadam 2</span><h3>Farzandni tanlang</h3><p>Maktab tasdiqlagan ro‘yxatdan farzandingizni belgilang.</p></div>
+          <div class="big">2</div>
+        </article>
+        <article class="step-card s3" style="--i:2">
+          <div><span class="tag mono">Qadam 3</span><h3>Holatni kuzating</h3><p>Davomat va yangiliklarni bir joyda ko‘ring.</p></div>
+          <div class="big">3</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BAND + RAQAMLAR -->
+    <div class="band" aria-hidden="true">
+      <div class="band-track">
+        <span class="fill">Maktab</span><span class="serif">oila</span><span>davomat</span><span class="fill">Maktab</span><span class="serif">oila</span><span>davomat</span><span class="fill">Maktab</span><span class="serif">oila</span><span>davomat</span>
+      </div>
+    </div>
+
+    <section class="wrap" id="raqamlar">
+      <div class="stats">
+        <div class="stat reveal" style="--d:0"><b><span data-count="300">0</span>+</b><span class="mono">o‘quvchi</span></div>
+        <div class="stat reveal" style="--d:1"><b><span data-count="82">0</span>%</b><span class="mono">bugungi davomat</span></div>
+        <div class="stat reveal" style="--d:2"><b><span data-count="24">0</span>/7</b><span class="mono">doim yaqin</span></div>
+        <div class="stat reveal" style="--d:3"><b><span data-count="3">0</span></b><span class="mono">profil turi</span></div>
+      </div>
+    </section>
+
+    <!-- SAVOLLAR -->
+    <section class="sec wrap" id="savol">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Savollar</div>
+        <h2>Tushunarsiz joyi <span class="serif">qoldimi?</span></h2>
+      </div>
+      <div class="faq reveal">
+        <div class="faq-item open">
+          <button class="faq-q" aria-expanded="true"><span class="n">01</span><span>Aloqa nima?</span><span class="pm"></span></button>
+          <div class="faq-a"><div><p>Aloqa — maktab davomati uchun sayt. Maktab o‘quvchining kelgan-kelmaganini belgilaydi, ota-ona esa farzandining bugungi holatini ko‘radi.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span class="n">02</span><span>Ota-ona farzandini qanday ko‘radi?</span><span class="pm"></span></button>
+          <div class="faq-a"><div><p>“Kirish” tugmasini bosing, “Ota-ona”ni tanlang, ism va parolingizni kiriting, so‘ng farzandingizni tanlang.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span class="n">03</span><span>Admin paneli nima uchun kerak?</span><span class="pm"></span></button>
+          <div class="faq-a"><div><p>Maktab xodimi bugungi hisobotni bitta ro‘yxatda ko‘radi: kim keldi va kimning davomati hali belgilanmagan.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span class="n">04</span><span>Bu tayyor tizimmi?</span><span class="pm"></span></button>
+          <div class="faq-a"><div><p>Hozircha bu demo versiya: parollar tekshirilmaydi, bildirishnomalar yuborilmaydi, kamera shaxsni tanimaydi. Haqiqiy tizimda ota-ona va farzand bog‘lanishini maktab serverda tasdiqlashi kerak.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CTA + FOOTER -->
+  <section class="cta">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Farzandingizning kunini <span class="serif">birga</span> kuzating</h2>
+        <p>Hoziroq kiring va maktab hayotini sodda ko‘rinishda his qiling.</p>
+        <button class="btn btn-primary mag" onclick="openRegister()">Platformaga kirish <span class="arrow">↗</span></button>
+      </div>
+      <div class="wordmark reveal" aria-hidden="true"><span class="wl" style="--i:0">a</span><span class="wl" style="--i:1">l</span><span class="wl" style="--i:2">o</span><span class="wl" style="--i:3">q</span><span class="wl" style="--i:4">a</span></div>
+      <div class="foot mono"><span>© 2026 Aloqa platformasi</span><span>Maktab hamjamiyati uchun</span></div>
+    </div>
+  </section>
+
+  <div class="overlay" id="overlay" onclick="outsideClose(event)">
+    <section class="modal" id="modal" aria-live="polite"></section>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const reduce = false; /* animatsiyalar doim yoqiq */
+    const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    /* ═══════════ Ma'lumotlar (demo) ═══════════ */
+    const students = [
+      { name: "Madina Karimova", class: "5-A", initials: "MK", gender: "qiz", present: false },
+      { name: "Asadbek Rahimov", class: "6-B", initials: "AR", gender: "o‘gil", present: false },
+      { name: "Ziyoda Aliyeva", class: "4-A", initials: "ZA", gender: "qiz", present: false },
+      { name: "Jasur Tursunov", class: "7-V", initials: "JT", gender: "o‘gil", present: false },
+      { name: "Mohira Islomova", class: "5-B", initials: "MI", gender: "qiz", present: false },
+      { name: "Sardor Qodirov", class: "5-A", initials: "SQ", gender: "o‘gil", present: false },
+      { name: "Dilnoza Yusupova", class: "6-B", initials: "DY", gender: "qiz", present: false },
+      { name: "Bobur Ergashev", class: "4-A", initials: "BE", gender: "o‘gil", present: false },
+      { name: "Shahlo Nazarova", class: "7-V", initials: "SN", gender: "qiz", present: false },
+      { name: "Otabek Saidov", class: "5-B", initials: "OS", gender: "o‘gil", present: false },
+      { name: "Nilufar Hamidova", class: "6-A", initials: "NH", gender: "qiz", present: false },
+      { name: "Sherzod Abdullayev", class: "7-V", initials: "SA", gender: "o‘gil", present: false }
+    ];
+
+    let cameraStream = null, scanToken = 0;
+    let parentName = "";
+    let childIndex = null;
+
+    const modal = document.getElementById("modal");
+    const overlay = document.getElementById("overlay");
+
+    /* ═══════════ Modal ═══════════ */
+    let navDir = 1, instantNext = false, closeTimer;
+
+    modal.addEventListener("click", e => {
+      const b = e.target.closest("button");
+      if (b && b.textContent.trim().startsWith("←")) navDir = -1;
+    }, true);
+
+    let outTimer = 0, outTick = 0;
+    function stopOutTimer() { clearTimeout(outTimer); clearInterval(outTick); }
+    function studentOutBtn() { return `<button class="out-btn" id="outBtn" onclick="studentLogout()">Akkauntdan chiqish</button>`; }
+    function studentLogout(auto) {
+      stopOutTimer(); saveProfile(null); closeModal();
+      showToast(auto ? "Vaqt tugadi — akkauntdan chiqdingiz" : "Akkauntdan chiqdingiz");
+    }
+    function armAutoLogout(sec) {
+      const b = document.getElementById("outBtn"); if (!b) return;
+      let left = sec; b.classList.add("go");
+      const paint = () => { b.textContent = `Akkauntdan chiqish (${left})`; };
+      paint();
+      outTick = setInterval(() => { left--; if (left > 0) paint(); }, 1000);
+      outTimer = setTimeout(() => studentLogout(true), sec * 1000);
+    }
+
+    function showModal(html) {
+      stopOutTimer();
+      clearTimeout(closeTimer);
+      const wasOpen = overlay.classList.contains("show") && !overlay.classList.contains("closing");
+      const from = wasOpen ? modal.offsetHeight : 0;
+      overlay.classList.remove("closing");
+
+      modal.innerHTML = `<div class="screen ${navDir < 0 ? "back" : ""} ${instantNext ? "static" : ""}">${html}</div>`;
+      navDir = 1; instantNext = false;
+
+      overlay.classList.add("show");
+      document.body.classList.add("modal-open");
+      document.body.style.overflow = "hidden";
+
+      if (wasOpen) {
+        const to = modal.offsetHeight;
+        if (!reduce && from && to && from !== to) {
+          modal.animate([{ height: from + "px" }, { height: to + "px" }], { duration: 560, easing: "cubic-bezier(.2,.8,.2,1)" });
+        }
+      } else {
+        modal.style.animation = "none"; void modal.offsetWidth; modal.style.animation = "";
+      }
+      bindRoleGlow();
+    }
+
+    function closeModal() {
+      if (!overlay.classList.contains("show") || overlay.classList.contains("closing")) return;
+      overlay.classList.add("closing");
+      document.body.classList.remove("modal-open");
+      document.body.style.overflow = "";
+      closeTimer = setTimeout(() => overlay.classList.remove("show", "closing"), reduce ? 0 : 300);
+    }
+
+    function outsideClose(event) {
+      if (event.target === overlay) { stopCamera(); closeModal(); }
+    }
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && overlay.classList.contains("show")) { stopCamera(); closeModal(); }
+    });
+
+    function bindRoleGlow() {
+      modal.querySelectorAll(".role").forEach(el => {
+        el.addEventListener("pointermove", e => {
+          const r = el.getBoundingClientRect();
+          el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+          el.style.setProperty("--my", (e.clientY - r.top) + "px");
+        });
+      });
+    }
+
+    function shake(ids) {
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+      });
+    }
+
+    function openRegister() {
+      stopCamera();
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Platformaga xush kelibsiz</h2>
+            <p class="subtle">Davom etish uchun profilingizni tanlang.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+
+        <div class="role-grid two">
+          <button class="role" style="--k:0" onclick="renderParentForm()">
+            <span class="role-emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="100" cx="9" cy="8" r="3.2"/><path pathLength="100" d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle pathLength="100" cx="17.5" cy="9" r="2.4"/><path pathLength="100" d="M17 14.2c2.4.3 4.2 2.3 4.2 4.8"/></svg></span>
+            <div><b>Ota-ona</b><span class="sub">Farzand holatini ko‘rish</span></div>
+          </button>
+          <button class="role" style="--k:1" onclick="renderAdminLogin()">
+            <span class="role-emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="100" d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6L12 3Z"/><path pathLength="100" d="m8.8 12.2 2.3 2.3 4.2-4.6"/></svg></span>
+            <div><b>Admin</b><span class="sub">Maktab paneli</span></div>
+          </button>
+        </div>
+      `);
+    }
+
+
+    /* ═══════════ Ota-ona / O'quvchi bo'limi ═══════════ */
+    const PROFILE_KEY = "aloqa_profile";
+    let profile = null;
+    try { profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || "null"); } catch (e) {}
+    if (!profile || !students[profile.index] || !["parent", "student"].includes(profile.role)) profile = null;
+    function saveProfile(p) {
+      profile = p;
+      try { p ? localStorage.setItem(PROFILE_KEY, JSON.stringify(p)) : localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+    }
+
+    const IC = {
+      parent: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="100" cx="9" cy="8" r="3.2"/><path pathLength="100" d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle pathLength="100" cx="17.5" cy="9" r="2.4"/><path pathLength="100" d="M17 14.2c2.4.3 4.2 2.3 4.2 4.8"/></svg>',
+      cam: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.6-2h6.8L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+      student: '<svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="100" d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z"/><path pathLength="100" d="M7 12v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4"/><path pathLength="100" d="M21 9.5V15"/></svg>'
+    };
+    const UZ_DAYS = ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"];
+    const UZ_MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentyabr", "oktyabr", "noyabr", "dekabr"];
+    function todayStr() { const d = new Date(); return `${UZ_DAYS[d.getDay()]}, ${d.getDate()}-${UZ_MONTHS[d.getMonth()]}`; }
+
+    function roleBtn(k, icon, title, sub, action) {
+      return `<button class="role" style="--k:${k}" onclick="${action}">
+        <span class="role-emoji">${icon}</span>
+        <div><b>${title}</b><span class="sub">${sub}</span></div>
+      </button>`;
+    }
+
+    /* 1-ekran: Registratsiya + 3 ta tugma */
+    function openHub() {
+      stopCamera();
+      const reg = profile
+        ? `<div class="reg-done"><span class="reg-ok">✓</span><div><b>Siz ro‘yxatdan o‘tgansiz</b><small>${profile.role === "parent" ? "Ota-ona" : "O‘quvchi"} · ${escapeHtml(profile.name)}</small></div>${profile.role === "parent" ? '<button class="reg-out" onclick="hubLogout()">Chiqish</button>' : ""}</div>`
+        : `<button class="hub-reg" id="hubReg" onclick="renderRegRole()"><span class="hub-step">1</span><div><b>Registratsiyadan o‘tish</b><small>Avval bir marta ro‘yxatdan o‘ting</small></div><span class="hub-go">→</span></button>`;
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Farzandim bugun maktabga keldimi?</h2>
+            <p class="subtle">Bir necha bosishda bilib oling.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        ${reg}
+        <div class="hub-label mono">${profile ? "Bo‘limni tanlang" : "2 · Ro‘yxatdan o‘tgach, bo‘limni tanlang"}</div>
+        <div class="role-grid two">
+          ${roleBtn(0, IC.parent, "Ota-ona", "Farzandim kelganmi?", "hubOpen('parent')")}
+          ${roleBtn(1, IC.student, "O‘quvchi", "Dars jadvali", "hubOpen('student')")}
+        </div>
+      `);
+    }
+
+    function hubOpen(role) {
+      if (!profile) {
+        const b = document.getElementById("hubReg");
+        if (b) { b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
+        showToast("Avval registratsiyadan o‘ting");
+        return;
+      }
+      if (profile.role !== role) {
+        showToast(role === "parent" ? "Siz o‘quvchi sifatida ro‘yxatdan o‘tgansiz" : "Siz ota-ona sifatida ro‘yxatdan o‘tgansiz");
+        return;
+      }
+      role === "parent" ? showParentStatus() : showSchedule();
+    }
+
+    function hubLogout() { saveProfile(null); showToast("Chiqdingiz"); openHub(); }
+
+    /* 2-ekran: Ota-ona yoki O'quvchi */
+    function renderRegRole() {
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Registratsiya</h2>
+            <p class="subtle">Siz kimsiz? Birini tanlang.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="role-grid two">
+          ${roleBtn(0, IC.parent, "Ota-ona", "Farzandim kelganini bilaman", "renderRegParent()")}
+          ${roleBtn(1, IC.student, "O‘quvchi", "Dars jadvalimni ko‘raman", "renderRegStudent()")}
+        </div>
+        <button class="back" onclick="openHub()">← Orqaga</button>
+      `);
+    }
+
+    function renderRegParent() {
+      const rows = students.map((st, i) => `
+        <div class="student" style="--k:${i}">
+          <div class="student-pic">${st.initials}</div>
+          <div class="student-info"><b>${st.name}</b><small>${st.class} sinf</small></div>
+          <button class="check-btn" onclick="finishRegParent(${i})">Mening bolam</button>
+        </div>`).join("");
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Ota-ona registratsiyasi</h2>
+            <p class="subtle">Ismingizni yozing va farzandingizni tanlang.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="field">
+          <label for="regName">Ism va familiya</label>
+          <input id="regName" placeholder="Masalan, Dilnoza Karimova" autocomplete="name">
+        </div>
+        <div class="hub-label mono" style="margin:0 0 10px">Farzandingiz</div>
+        <div class="list">${rows}</div>
+        <button class="back" onclick="renderRegRole()">← Orqaga</button>
+      `);
+    }
+
+    function finishRegParent(i) {
+      const name = document.getElementById("regName").value.trim();
+      if (!name) { shake(["regName"]); showToast("Avval ismingizni yozing"); document.getElementById("regName").focus(); return; }
+      saveProfile({ role: "parent", name, index: i });
+      showToast("Ro‘yxatdan o‘tdingiz ✓");
+      showParentStatus();
+    }
+
+    function renderRegStudent() {
+      const rows = students.map((st, i) => `
+        <div class="student" style="--k:${i}">
+          <div class="student-pic">${st.initials}</div>
+          <div class="student-info"><b>${st.name}</b><small>${st.class} sinf</small></div>
+          <button class="check-btn" onclick="finishRegStudent(${i})">Bu menman</button>
+        </div>`).join("");
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>O‘quvchi registratsiyasi</h2>
+            <p class="subtle">Ro‘yxatdan o‘zingizni toping.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="list" style="margin-top:22px">${rows}</div>
+        <button class="back" onclick="renderRegRole()">← Orqaga</button>
+      `);
+    }
+
+    function finishRegStudent(i) {
+      saveProfile({ role: "student", name: students[i].name, index: i });
+      showToast("Ro‘yxatdan o‘tdingiz ✓");
+      showSchedule();
+    }
+
+    /* Ota-ona: farzand kelganmi? */
+    function showParentStatus() {
+      const c = students[profile.index], here = c.present;
+      const ph = here ? loadPhotos(profile.index) : null;
+      const photosHtml = ph ? `<div class="hub-label mono">Bugungi rasmlar${ph.time ? " · soat " + ph.time : ""}</div><div class="photos">${ph.shots.map(u => `<img src="${u}" alt="${escapeHtml(c.name)}">`).join("")}</div><p class="subtle" style="font-size:12.5px;margin-top:8px">Farzandingiz skanerdan o‘tganda olingan rasmlar.</p>` : "";
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Farzandim holati</h2>
+            <p class="subtle">${escapeHtml(profile.name.split(" ")[0])}, bugun — ${todayStr()}</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="kid-card ${here ? "is-in" : "is-out"}">
+          <div class="kid-top">
+            <div class="student-pic big">${c.initials}</div>
+            <div><b>${c.name}</b><small>${c.class} sinf</small></div>
+          </div>
+          <div class="kid-status">
+            <span class="pulse-dot"></span>
+            <div>
+              <small>Bugungi holat</small>
+              <strong>${here ? "Maktabga keldi" : "Hozircha kelmagan"}</strong>
+              <em>${here ? "Davomat belgilandi" + (c.time ? " · soat " + c.time : "") : "Maktab davomatni hali belgilamagan"}</em>
+            </div>
+            <span class="kid-emoji">${here ? "✅" : "⏳"}</span>
+          </div>
+        </div>
+        ${photosHtml}
+        <div class="hub-actions">
+          <button class="btn btn-primary" onclick="instantNext=true;showParentStatus();showToast('Yangilandi')">Yangilash</button>
+        </div>
+        <p class="subtle" style="font-size:12.5px;margin-top:14px">Hozircha demo ma’lumot: haqiqiy davomat maktab tizimiga ulangach shu yerda ko‘rinadi.</p>
+        <button class="back" onclick="openHub()">← Bosh menyu</button>
+      `);
+    }
+
+    /* O'quvchi: dars jadvali */
+    const SCHEDULE = [
+      ["Ona tili", "Matematika", "Ingliz tili", "Tabiiy fan", "Jismoniy tarbiya"],
+      ["Matematika", "O‘qish", "Rus tili", "Tasviriy san’at", "Informatika"],
+      ["Ona tili", "Matematika", "Tarix", "Ingliz tili", "Musiqa"],
+      ["Matematika", "Ona tili", "Tabiiy fan", "Ingliz tili", "Mehnat"],
+      ["O‘qish", "Matematika", "Rus tili", "Jismoniy tarbiya", "Sinf soati"],
+      ["Ona tili", "Matematika", "Ingliz tili", "Tabiiy fan"]
+    ];
+    const LESSON_START = [8 * 60 + 30, 9 * 60 + 25, 10 * 60 + 20, 11 * 60 + 25, 12 * 60 + 20];
+    const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+    const SHORT_DAYS = ["Du", "Se", "Chor", "Pay", "Ju", "Sha"];
+
+    function showSchedule() {
+      const st = students[profile.index];
+      const wd = new Date().getDay();            /* 0 = yakshanba */
+      const todayIdx = wd === 0 ? -1 : wd - 1;
+      const start = todayIdx < 0 ? 0 : todayIdx;
+      const tabs = SHORT_DAYS.map((d, i) => `<button class="day ${i === start ? "active" : ""}" onclick="setDay(${i})"><small>${i === todayIdx ? "bugun" : ""}</small>${d}</button>`).join("");
+      showModal(`
+        ${studentOutBtn()}
+        <div class="modal-head">
+          <div>
+            <h2>Dars jadvali</h2>
+            <p class="subtle">${st.name} · ${st.class} sinf</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <button class="arrive ${st.present ? "done" : ""}" onclick="arriveStart()">
+          <span class="arrive-ic">${st.present ? "✓" : IC.cam}</span>
+          <div><b>Kelganini aniqlash</b><small>${st.present ? "Bugun soat " + st.time + " da belgilangansiz" : "Yuz skaneri orqali “Keldim” deb belgilang"}</small></div>
+          <span class="hub-go">→</span>
+        </button>
+        <div class="days">${tabs}</div>
+        <div id="sched"></div>
+        <p class="subtle" style="font-size:12.5px;margin-top:6px">Demo jadval: haqiqiy jadvalni maktab kiritadi.</p>
+        <button class="back" onclick="openHub()">← Bosh menyu</button>
+      `);
+      setDay(start);
+    }
+
+    function setDay(i) {
+      document.querySelectorAll(".day").forEach((b, k) => b.classList.toggle("active", k === i));
+      const now = new Date(), wd = now.getDay(), mins = now.getHours() * 60 + now.getMinutes();
+      const isToday = wd !== 0 && wd - 1 === i;
+      document.getElementById("sched").innerHTML = SCHEDULE[i].map((name, k) => {
+        const a = LESSON_START[k], live = isToday && mins >= a && mins < a + 45;
+        return `<div class="lesson ${live ? "now" : ""}" style="--k:${k}">
+          <span class="ln">${k + 1}</span>
+          <div><b>${name}</b><small>${hhmm(a)} – ${hhmm(a + 45)}</small></div>
+          ${live ? '<span class="live">Hozir</span>' : ""}
+        </div>`;
+      }).join("");
+    }
+
+
+    /* ═══════════ Kelganini aniqlash (o'quvchi) ═══════════ */
+    const PRESENT_KEY = "aloqa_present";
+    const dayKey = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+    function loadPresent() {
+      try {
+        const o = JSON.parse(localStorage.getItem(PRESENT_KEY) || "null");
+        if (o && o.day === dayKey()) Object.entries(o.map).forEach(([i, t]) => { if (students[i]) { students[i].present = true; students[i].time = t; } });
+      } catch (e) {}
+    }
+    function markPresent(i) {
+      const n = new Date(), t = hhmm(n.getHours() * 60 + n.getMinutes());
+      students[i].present = true; students[i].time = t;
+      try {
+        const o = JSON.parse(localStorage.getItem(PRESENT_KEY) || "null");
+        const map = o && o.day === dayKey() ? o.map : {};
+        map[i] = t;
+        localStorage.setItem(PRESENT_KEY, JSON.stringify({ day: dayKey(), map }));
+      } catch (e) {}
+    }
+    loadPresent();
+
+    /* Skaner paytida olingan rasmlar (faqat muvaffaqiyatli o'tganda saqlanadi, kuniga bir marta yangilanadi) */
+    const PHOTO_KEY = "aloqa_photos";
+    function snapFrame(video) {
+      try {
+        const w = video.videoWidth, h = video.videoHeight; if (!w || !h) return null;
+        const c = document.createElement("canvas"); c.width = 320; c.height = Math.round(h * 320 / w);
+        c.getContext("2d").drawImage(video, 0, 0, c.width, c.height);
+        return c.toDataURL("image/jpeg", 0.72);
+      } catch (e) { return null; }
+    }
+    function savePhotos(i, shots) {
+      if (!shots.length) return;
+      try {
+        const o = JSON.parse(localStorage.getItem(PHOTO_KEY) || "null");
+        const map = o && o.day === dayKey() ? o.map : {};
+        map[i] = { time: students[i].time, shots };
+        localStorage.setItem(PHOTO_KEY, JSON.stringify({ day: dayKey(), map }));
+      } catch (e) {}
+    }
+    function loadPhotos(i) {
+      try {
+        const o = JSON.parse(localStorage.getItem(PHOTO_KEY) || "null");
+        return o && o.day === dayKey() && o.map[i] ? o.map[i] : null;
+      } catch (e) { return null; }
+    }
+
+    
+    function arriveStart() {
+      if (students[profile.index].present) { renderArriveDone(profile.index, true); return; }
+      renderArrive();
+    }
+
+    /* 1) Maktabdagi hamma o'quvchilar ro'yxati + qidiruv */
+    function renderArrive() {
+      stopCamera();
+      showModal(`
+        ${studentOutBtn()}
+        <div class="modal-head">
+          <div>
+            <h2>Kelganini aniqlash</h2>
+            <p class="subtle">Ro‘yxatdan o‘zingizni toping va “Bu men” tugmasini bosing.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <input class="search" id="arSearch" placeholder="Ism yoki sinf bo‘yicha qidirish…" oninput="filterArrive(this.value)" autocomplete="off">
+        <div class="list scroll" id="arList"></div>
+        <button class="back" onclick="showSchedule()">← Orqaga</button>
+      `);
+      filterArrive("");
+      setTimeout(() => document.getElementById("arSearch")?.focus(), 120);
+    }
+
+    function filterArrive(q) {
+      q = q.trim().toLowerCase();
+      const items = students.map((st, i) => ({ st, i })).filter(({ st }) => !q || st.name.toLowerCase().includes(q) || st.class.toLowerCase().includes(q));
+      document.getElementById("arList").innerHTML = items.length
+        ? items.map(({ st, i }, k) => `
+          <div class="student" style="--k:${Math.min(k, 8)}">
+            <div class="student-pic">${st.initials}</div>
+            <div class="student-info"><b>${st.name}</b><small>${st.class} sinf</small></div>
+            <button class="check-btn" onclick="arriveSelect(${i})">Bu men</button>
+          </div>`).join("")
+        : `<div class="free">Hech kim topilmadi</div>`;
+    }
+
+    /* 2) "Bu men" — akkaunt tekshiruvi */
+    function arriveSelect(i) {
+      const me = students[profile.index], pick = students[i];
+      if (pick.gender !== me.gender) { renderWrongAccount(); return; }
+      if (i !== profile.index) { showToast("Bu siz emassiz — ro‘yxatdan o‘zingizni tanlang"); return; }
+      renderFaceScan(i);
+    }
+
+    function renderWrongAccount(reason) {
+      showModal(`
+        <div class="modal-head">
+          <div><h2>Kelganini aniqlash</h2></div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="err-card">
+          <div class="err-ic">!</div>
+          <h3>Siz boshqa odamning akkauntiga kirib ketgansiz</h3>
+          <p>${reason === "scan" ? "Yuz skaneri bu akkaunt egasiga mos kelmadi." : "Tanlangan o‘quvchi bu akkaunt egasiga mos kelmadi."} O‘z akkauntingizdan kiring va qayta urinib ko‘ring.</p>
+        </div>
+        <div class="hub-actions">
+          <button class="btn btn-ghost" onclick="renderArrive()">← Qayta urinish</button>
+          <button class="btn btn-primary" onclick="hubLogout()">Akkauntdan chiqish</button>
+        </div>
+      `);
+    }
+
+    /* 3) Yuz skaneri */
+    async function renderFaceScan(i) {
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Yuzni skanerlash</h2>
+            <p class="subtle">${students[i].name} · ${students[i].class} sinf</p>
+          </div>
+          <button class="close" onclick="closeCamera()" aria-label="Yopish">×</button>
+        </div>
+        <div class="camera-box">
+          <video id="scanVideo" autoplay playsinline muted></video>
+          <div class="camera-guide"><div class="face-frame"></div></div>
+          <div class="scan-line"></div>
+          <div class="camera-hint" id="scanHint">Kamera ochilmoqda…</div>
+        </div>
+        <div class="scan-prog"><i id="scanBar"></i></div>
+        <div class="countdown" id="scanStatus">Yuzingizni oval ichiga joylang</div>
+        <p class="subtle" style="font-size:12px;text-align:center;margin-bottom:6px">Skaner yuz orqali qiz yoki o‘g‘il bolaligini baholaydi. Yuzingiz tekshirilgach, jonli ekaningizni tasdiqlash uchun boshingizni buring. Muvaffaqiyatli o‘tsangiz, shu paytda olingan rasmlar ota-onangizga ko‘rsatiladi.</p>
+        <button class="btn btn-ghost full" onclick="renderArrive()">Bekor qilish</button>
+      `);
+      const token = ++scanToken;
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) throw new Error("no-camera");
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+        const video = document.getElementById("scanVideo");
+        if (token !== scanToken || !video) { stream.getTracks().forEach(t => t.stop()); return; }
+        cameraStream = stream;
+        video.srcObject = stream;
+        try { await video.play(); } catch (e) {}
+        runScan(i, token, video);
+      } catch (err) {
+        if (token !== scanToken) return;
+        stopCamera();
+        renderCameraError(i, err);
+      }
+    }
+
+    /* Yuzdan jinsni baholash modeli (brauzerning o'zida ishlaydi, rasm hech qayerga yuborilmaydi) */
+    const FACE_LIB = "https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.js";
+    const FACE_MODELS = "https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/";
+    let faceModelPromise = null;
+    function loadFaceModel() {
+      if (faceModelPromise) return faceModelPromise;
+      faceModelPromise = new Promise((resolve, reject) => {
+        const go = async () => {
+          try {
+            await faceapi.tf.ready();
+            await Promise.all([
+              faceapi.nets.tinyFaceDetector.loadFromUri(FACE_MODELS),
+              faceapi.nets.faceLandmark68TinyNet.loadFromUri(FACE_MODELS),
+              faceapi.nets.ageGenderNet.loadFromUri(FACE_MODELS)
+            ]);
+            resolve();
+          } catch (e) { reject(e); }
+        };
+        if (window.faceapi) { go(); return; }
+        const sc = document.createElement("script");
+        sc.src = FACE_LIB; sc.onload = go; sc.onerror = () => reject(new Error("lib"));
+        document.head.appendChild(sc);
+      });
+      faceModelPromise.catch(() => { faceModelPromise = null; });
+      return faceModelPromise;
+    }
+
+    async function runScan(i, token, video) {
+      const bar = document.getElementById("scanBar"), status = document.getElementById("scanStatus"), hint = document.getElementById("scanHint");
+      hint.textContent = "Skaner tayyorlanmoqda…";
+      status.textContent = "Model yuklanmoqda (birinchi marta biroz vaqt oladi)…";
+      try { await loadFaceModel(); }
+      catch (e) { if (token === scanToken) { stopCamera(); renderModelError(i); } return; }
+      if (token !== scanToken) return;
+
+      const me = students[i], expectFemale = me.gender === "qiz";
+      const opts = new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 });
+      const NEED = 12;                    /* nechta yaxshi kadr kerak */
+      let good = 0, sum = 0, lost = 0; const shots = [];
+      hint.textContent = "Kameraga to‘g‘ri qarang";
+      status.textContent = "Yuzingizni oval ichiga joylang";
+
+      const tick = async () => {
+        if (token !== scanToken) return;
+        let r = null;
+        try { r = await faceapi.detectSingleFace(video, opts).withFaceLandmarks(true).withAgeAndGender(); } catch (e) {}
+        if (token !== scanToken) return;
+        if (r) {
+          const pFemale = r.gender === "female" ? r.genderProbability : 1 - r.genderProbability;
+          sum += expectFemale ? pFemale : 1 - pFemale;   /* akkaunt egasiga mos kelish ehtimoli */
+          good++; lost = 0;
+          if ([3, 7, 11].includes(good)) { const sh = snapFrame(video); if (sh) shots.push(sh); }
+          bar.style.width = (good / NEED * 100) + "%";
+          status.textContent = `Skanerlanmoqda… ${Math.round(good / NEED * 100)}%`;
+        } else {
+          lost++;
+          if (lost > 2) status.textContent = "Yuz topilmadi — kameraga qarang";
+        }
+        if (good >= NEED) {
+          const match = sum / good;
+          if (match >= 0.6) { runLiveness(i, token, video, opts, bar, status, hint, shots); return; }
+          stopCamera();
+          if (match <= 0.4) renderWrongAccount("scan");
+          else renderScanUnsure(i);
+        } else setTimeout(tick, 220);
+      };
+      tick();
+    }
+
+    /* Jonli odam tekshiruvi: rasm yoki ekrandagi tasvir bosh burolmaydi */
+    function runLiveness(i, token, video, opts, bar, status, hint, shots) {
+      const first = Math.random() < .5 ? "right" : "left";
+      const steps = [first, first === "right" ? "left" : "right"];
+      const say = d => d === "right" ? "Boshingizni sekin o‘ngga buring →" : "← Boshingizni sekin chapga buring";
+      let k = 0, seenFront = false, t0 = Date.now();
+      bar.style.width = "0%";
+      hint.textContent = "Jonli odam tekshiruvi · 1/2";
+      status.textContent = say(steps[0]);
+      const tick = async () => {
+        if (token !== scanToken) return;
+        let r = null;
+        try { r = await faceapi.detectSingleFace(video, opts).withFaceLandmarks(true); } catch (e) {}
+        if (token !== scanToken) return;
+        if (Date.now() - t0 > 12000) { stopCamera(); renderNotLive(i); return; }
+        if (r) {
+          const p = r.landmarks.positions;
+          const yaw = (p[30].x - p[0].x) / (p[16].x - p[0].x);   /* 0.5 — to'g'ri qarayapti */
+          if (yaw > .42 && yaw < .58) seenFront = true;
+          const d = steps[k];
+          if (seenFront && (d === "right" ? yaw < .38 : yaw > .62)) {
+            k++; seenFront = false; t0 = Date.now();
+            bar.style.width = (k / 2 * 100) + "%";
+            if (k >= 2) {
+              stopCamera(); markPresent(i); savePhotos(i, shots); renderArriveDone(i, false);
+              return;
+            }
+            hint.textContent = "Jonli odam tekshiruvi · 2/2";
+            status.textContent = say(steps[k]);
+          }
+        }
+        setTimeout(tick, 120);
+      };
+      tick();
+    }
+
+    function renderNotLive(i) {
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Jonli odam aniqlanmadi</h2>
+            <p class="subtle">Skaner so‘ralgan harakatni ko‘rmadi.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="err-card">
+          <div class="err-ic">!</div>
+          <h3>Rasm yoki ekrandagi tasvir qabul qilinmaydi</h3>
+          <p>Faqat kamera oldidagi jonli odam o‘tadi. Kameraga o‘zingiz qarab, so‘ralgan tomonga boshingizni sekin buring.</p>
+        </div>
+        <div class="hub-actions">
+          <button class="btn btn-ghost" onclick="renderArrive()">← Orqaga</button>
+          <button class="btn btn-primary" onclick="renderFaceScan(${i})">Qayta urinish</button>
+        </div>
+      `);
+    }
+
+    function renderModelError(i) {
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Skaner yuklanmadi</h2>
+            <p class="subtle">Yuzni tekshirish modeli ochilmadi.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">Skaner modeli internetdan yuklanadi. Internet aloqasini tekshirib, qayta urinib ko‘ring.</div>
+        <div class="hub-actions">
+          <button class="btn btn-ghost" onclick="renderArrive()">← Orqaga</button>
+          <button class="btn btn-primary" onclick="renderFaceScan(${i})">Qayta urinish</button>
+        </div>
+      `);
+    }
+
+    function renderScanUnsure(i) {
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Aniqlab bo‘lmadi</h2>
+            <p class="subtle">Skaner natijasi aniq chiqmadi.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">Yorug‘roq joyda, yuzingizni kameraga to‘g‘ri tutib, soch yoki bosh kiyim yuzni yopmasligi kerak. Qayta urinib ko‘ring.</div>
+        <div class="hub-actions">
+          <button class="btn btn-ghost" onclick="renderArrive()">← Orqaga</button>
+          <button class="btn btn-primary" onclick="renderFaceScan(${i})">Qayta skanerlash</button>
+        </div>
+      `);
+    }
+
+    function renderCameraError(i, err) {
+      const n = err && err.name;
+      let why = "Kamera ochilmadi. Quyidagilarni tekshiring.";
+      if (!window.isSecureContext) why = "Sayt xavfsiz (HTTPS) rejimda ochilmagan, shuning uchun brauzer kamerani bermaydi. Saytni internetga joylab, https:// manzil orqali oching.";
+      else if (n === "NotAllowedError" || n === "SecurityError") why = "Kameraga ruxsat berilmagan. Manzil satridagi 🔒 (yoki kamera) belgisini bosing → Kamera → “Ruxsat berish”, so‘ng sahifani yangilang. Agar sayt Claude ichidagi oynada ochilgan bo‘lsa, uni Chrome yoki Safari’da alohida oching.";
+      else if (n === "NotFoundError" || n === "OverconstrainedError") why = "Bu qurilmada kamera topilmadi.";
+      else if (n === "NotReadableError") why = "Kamerani boshqa dastur yoki sahifa ishlatyapti. Uni yopib, qayta urinib ko‘ring.";
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Kameraga ruxsat kerak</h2>
+            <p class="subtle">Yuzni skanerlash uchun kamera yoqilishi kerak.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">${why}</div>
+        <div class="hub-actions">
+          <button class="btn btn-ghost" onclick="renderArrive()">← Orqaga</button>
+          <button class="btn btn-primary" onclick="renderFaceScan(${i})">Qayta urinish</button>
+        </div>
+      `);
+    }
+
+    /* 4) Muvaffaqiyat */
+    function renderArriveDone(i, already) {
+      const st = students[i];
+      showModal(`
+        ${studentOutBtn()}
+        <div class="modal-head">
+          <div><h2>Kelganini aniqlash</h2></div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="ok-card">
+          <div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path pathLength="100" style="stroke-dasharray:100;stroke-dashoffset:100;animation:strokeDraw .7s .25s var(--ease) forwards" d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+          <h3>${already ? "Siz bugun belgilangansiz" : "Siz maktabga keldingiz!"}</h3>
+          <p>${escapeHtml(st.name)} · ${st.class} sinf<br>${todayStr()} · soat <b>${st.time}</b></p>
+        </div>
+        <div class="hub-actions">
+          <button class="btn btn-primary" onclick="showSchedule()">Dars jadvaliga o‘tish →</button>
+        </div>
+      `);
+      armAutoLogout(5);
+    }
+
+    function renderStudents() {
+      const rows = students.map((student, index) => `
+        <div class="student" style="--k:${index}">
+          <div class="student-pic">${student.initials}</div>
+          <div class="student-info">
+            <b>${student.name}</b>
+            <small>${student.class} sinf · ${student.gender === "qiz" ? "Qiz bola" : "O‘gil bola"}</small>
+          </div>
+          <div class="status ${student.present ? "present" : ""}">${student.present ? "✓ Keldi" : "— Kelmadi"}</div>
+          <button class="check-btn" onclick="checkIn(${index})" ${student.present ? "disabled" : ""}>${student.present ? "Belgilandi" : "Keldim"}</button>
+        </div>
+      `).join("");
+
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>O‘quvchilar</h2>
+            <p class="subtle">Ismingizni topib, davomatni belgilang.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">
+          Demo: kamera faqat ko‘rsatish uchun ochiladi. U yuzni tanimaydi va o‘quvchi shaxsini tasdiqlamaydi.
+          Haqiqiy tizimda maktab bergan QR-kod yoki karta serverda tekshirilishi kerak.
+        </div>
+        <div class="list">${rows}</div>
+        <button class="back" onclick="openRegister()">← Profil tanlash</button>
+      `);
+    }
+
+    async function checkIn(index) {
+      if (!navigator.mediaDevices?.getUserMedia) { showToast("Kamera uchun HTTPS yoki localhost kerak"); return; }
+
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Shaxsni tasdiqlash</h2>
+            <p class="subtle">${students[index].name}</p>
+          </div>
+          <button class="close" onclick="closeCamera()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">Kamera shaxs yoki akkaunt egasini tasdiqlamaydi. Shu sababli bu demo davomat belgilamaydi.</div>
+        <div class="camera-box">
+          <video id="attendanceVideo" autoplay playsinline muted></video>
+          <div class="camera-guide"><div class="face-frame"></div></div>
+          <div class="scan-line"></div>
+          <div class="camera-hint">Kamera tasviri</div>
+        </div>
+        <div class="countdown" id="cameraStatus">Kamera ochilmoqda…</div>
+        <button class="btn btn-ghost full" onclick="cancelCamera()">Bekor qilish</button>
+      `);
+
+      try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+        const video = document.getElementById("attendanceVideo");
+        if (!video) { stopCamera(); return; }
+        video.srcObject = cameraStream;
+        document.getElementById("cameraStatus").textContent = "Tasdiqlash uchun maktab akkaunti yoki QR-kodi kerak.";
+      } catch (error) {
+        stopCamera();
+        showModal(`
+          <div class="modal-head">
+            <div>
+              <h2>Kameraga ruxsat kerak</h2>
+              <p class="subtle">Brauzer sozlamalaridan kamera ruxsatini bering.</p>
+            </div>
+            <button class="close" onclick="renderStudents()" aria-label="Yopish">×</button>
+          </div>
+          <div class="notice">Kamera ruxsati berilmagan yoki kamera ishlamayapti.</div>
+          <button class="btn btn-ghost" onclick="renderStudents()">← O‘quvchilar ro‘yxati</button>
+        `);
+      }
+    }
+
+    function stopCamera() {
+      scanToken++;
+      if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
+    }
+    function closeCamera() { stopCamera(); closeModal(); }
+    function cancelCamera() { stopCamera(); renderStudents(); }
+
+    function renderParentForm() {
+      stopCamera();
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Ota-ona kabineti</h2>
+            <p class="subtle">Demo kabinetga kirish uchun ma’lumot kiriting.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="field">
+          <label for="parentName">Ism va familiya</label>
+          <input id="parentName" placeholder="Masalan, Dilnoza Karimova" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="parentPassword">Parol</label>
+          <input id="parentPassword" type="password" placeholder="Parolingiz" autocomplete="current-password" onkeydown="if(event.key === 'Enter') parentLogin()">
+        </div>
+        <div class="notice">Demo versiyada akkaunt tekshirilmaydi. Haqiqiy tizimda ota-ona va farzand bog‘lanishini maktab tasdiqlashi kerak.</div>
+        <button class="btn btn-primary full" onclick="parentLogin()">Davom etish →</button>
+        <button class="back" onclick="openRegister()">← Profil tanlash</button>
+      `);
+    }
+
+    function parentLogin() {
+      parentName = document.getElementById("parentName").value.trim();
+      const password = document.getElementById("parentPassword").value;
+      if (!parentName || !password) { shake(["parentName", "parentPassword"]); showToast("Ism va parolni kiriting"); return; }
+      renderChildren();
+    }
+
+    function renderChildren() {
+      const rows = students.map((student, index) => `
+        <div class="student" style="--k:${index}">
+          <div class="student-pic">${student.initials}</div>
+          <div class="student-info">
+            <b>${student.name}</b>
+            <small>${student.class} sinf · ${student.gender} · ${student.present ? "✓ Bugun keldi" : "Davomat kutilmoqda"}</small>
+          </div>
+          <button class="check-btn ${childIndex === index ? "selected pop" : ""}" onclick="selectChild(${index})">${childIndex === index ? "Tanlandi ✓" : "Mening bolam"}</button>
+        </div>
+      `).join("");
+
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Salom, ${escapeHtml(parentName.split(" ")[0])}</h2>
+            <p class="subtle">Demo ro‘yxatdan farzandingizni tanlang.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice">Haqiqiy saytda ota-ona ro‘yxatdagi istalgan bolani tanlamasligi kerak: bog‘lanishni maktab akkaunt orqali tasdiqlashi lozim.</div>
+        <div class="list">${rows}</div>
+        ${childIndex !== null ? `
+          <div class="notice">
+            <b>${students[childIndex].name}:</b>
+            ${students[childIndex].gender === "qiz" ? "Qiz bola" : "O‘gil bola"} ·
+            ${students[childIndex].present ? "Bugun maktabga kelgan ✓" : "Hozircha davomat belgilanmagan."}
+          </div>` : ""}
+        <button class="btn btn-primary full" onclick="watchChild()">Farzandim holatini ko‘rish</button>
+        <button class="back" onclick="renderParentForm()">← Orqaga</button>
+      `);
+    }
+
+    function selectChild(index) { childIndex = index; instantNext = true; renderChildren(); }
+
+    function watchChild() {
+      if (childIndex === null) { showToast("Avval farzandingizni tanlang"); return; }
+      const child = students[childIndex];
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Farzandim holati</h2>
+            <p class="subtle">${escapeHtml(child.name)} · ${child.class} sinf</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice" style="padding:22px;font-size:15px">
+          ${child.present ? "✅ Demo holati: bugun maktabga kelgan." : "⏳ Bugungi davomat hali belgilanmagan."}
+          <br><br>
+          <b>Demo ma’lumot:</b> ${child.gender === "qiz" ? "Qiz bola" : "O‘gil bola"}
+        </div>
+        <p class="subtle" style="font-size:13px;margin-bottom:14px">Bu demo versiyada haqiqiy bildirishnomalar va jonli kamera yo‘q.</p>
+        <button class="btn btn-ghost" onclick="renderChildren()">← Farzandlar ro‘yxati</button>
+      `);
+    }
+
+    function renderAdminLogin() {
+      stopCamera();
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Admin paneli</h2>
+            <p class="subtle">Demo parolini kiriting.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="field">
+          <label for="adminPassword">Admin paroli</label>
+          <input id="adminPassword" type="password" placeholder="Parol" onkeydown="if(event.key === 'Enter') adminLogin()">
+        </div>
+        <button class="btn btn-primary full" onclick="adminLogin()">Kirish →</button>
+        <button class="back" onclick="openRegister()">← Profil tanlash</button>
+      `);
+      setTimeout(() => document.getElementById("adminPassword")?.focus(), 80);
+    }
+
+    function adminLogin() {
+      const password = document.getElementById("adminPassword").value;
+      if (password !== "1979") { shake(["adminPassword"]); showToast("Parol noto‘g‘ri"); return; }
+      renderAdmin();
+    }
+
+    function renderAdmin() {
+      const present = students.filter(s => s.present).length;
+      const rows = students.map((student, i) => `
+        <div class="student" style="--k:${i}">
+          <div class="student-pic">${student.initials}</div>
+          <div class="student-info">
+            <b>${student.name}</b>
+            <small>${student.class} sinf · ${student.gender === "qiz" ? "Qiz bola" : "O‘gil bola"}</small>
+          </div>
+          <div class="status ${student.present ? "present" : ""}">${student.present ? "✓ Keldi" : "— Kelmadi"}</div>
+        </div>
+      `).join("");
+
+      showModal(`
+        <div class="modal-head">
+          <div>
+            <h2>Maktab paneli</h2>
+            <p class="subtle">Bugungi demo davomat hisoboti.</p>
+          </div>
+          <button class="close" onclick="closeModal()" aria-label="Yopish">×</button>
+        </div>
+        <div class="notice"><b>${present}</b> nafar keldi · <b>${students.length - present}</b> nafar davomat belgilanmagan</div>
+        <div class="list">${rows}</div>
+        <button class="back" onclick="openRegister()">← Profil tanlash</button>
+      `);
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    /* ═══════════ Motion ═══════════ */
+    const nav = document.getElementById("nav");
+    const progress = document.getElementById("progress");
+    const heroEl = document.getElementById("hero");
+    const bands = [...document.querySelectorAll(".band")];
+    const cards = [...document.querySelectorAll(".step-card")];
+    const heroCounters = [];
+
+    /* Davomat kataklari (30 ta, 25 tasi "keldi") */
+    const cellsBox = document.getElementById("cells");
+    for (let k = 0; k < 30; k++) {
+      const c = document.createElement("i");
+      c.className = "cell" + (k < 25 ? " on" : "");
+      c.style.setProperty("--n", k);
+      cellsBox.appendChild(c);
+    }
+
+    /* Mobil menyu */
+    const menuBtn = document.getElementById("menuBtn");
+    function setMenu(open) { nav.classList.toggle("menu-open", open); menuBtn.setAttribute("aria-expanded", open); }
+    menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("menu-open")));
+    document.querySelectorAll(".mobile-menu a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+    addEventListener("pointerdown", e => { if (nav.classList.contains("menu-open") && !nav.contains(e.target)) setMenu(false); });
+    addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+    /* Scroll: bitta rAF ichida avval hammasini o'qiydi, keyin yozadi (qotmaslik uchun) */
+    let ticking = false, titleTy = 0;
+    function frame() {
+      ticking = false;
+      const h = document.documentElement, y = h.scrollTop, vh = innerHeight;
+      const maxS = h.scrollHeight - h.clientHeight || 1;
+      /* — o'qish — */
+      const rFill = fillSec.getBoundingClientRect(), rLive = liveCard.getBoundingClientRect(), rStory = storySec.getBoundingClientRect();
+      const bandR = bands.map(b => b.getBoundingClientRect());
+      const nextR = cards.map((c, i) => i < cards.length - 1 ? cards[i + 1].getBoundingClientRect() : null);
+      const pR = pitems.map(o => o.el.getBoundingClientRect());
+      /* — yozish — */
+      progress.style.transform = `scaleX(${y / maxS})`;
+      nav.classList.toggle("scrolled", y > 40);
+      if (y < 2000) badgeEl.style.setProperty("--sy", y);
+      scrollFx(y, rFill, rLive, rStory);
+      bands.forEach((b, i) => {
+        const r = bandR[i];
+        if (r.bottom < 0 || r.top > vh) return;
+        b.firstElementChild.style.transform = `translate3d(${(r.top + r.height / 2 - vh / 2) * .45}px,0,0)`;
+      });
+      cards.forEach((c, i) => {
+        const r = nextR[i];
+        if (!r) return;
+        c.style.transform = `scale(${1 - clamp01(1 - r.top / vh) * .06})`;
+      });
+      pitems.forEach((o, i) => {
+        const r = pR[i];
+        if (r.bottom < -300 || r.top > vh + 300) return;
+        o.ty = (r.top - o.ty + r.height / 2 - vh / 2) * o.k;
+        o.el.style.translate = `0 ${o.ty.toFixed(1)}px`;
+      });
+      if (y < 1400) {
+        titleTy = y * .18;
+        htitle.style.translate = `0 ${titleTy.toFixed(1)}px`;
+        htitle.style.opacity = Math.max(.15, 1 - y / 900).toFixed(3);
+      }
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+
+    /* Reveal */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { threshold: .15, rootMargin: "0px 0px -6% 0px" });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    /* Sanagichlar */
+    function countUp(el) {
+      const target = +el.dataset.count;
+      if (reduce) { el.textContent = target; return; }
+      const dur = 1900, start = performance.now();
+      const tick = now => {
+        const t = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - t, 4)));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { countUp(en.target); cio.unobserve(en.target); } });
+    }, { threshold: .5 });
+    document.querySelectorAll("[data-count]").forEach(el => cio.observe(el));
+
+    /* Sarlavhalarni so'zlarga bo'lish */
+    function splitWords(el) {
+      let i = 0;
+      const walk = (node, cls) => {
+        [...node.childNodes].forEach(n => {
+          if (n.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(tok => {
+              if (!tok) return;
+              if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(" ")); return; }
+              const w = document.createElement("span"); w.className = "sw";
+              const ii = document.createElement("i"); ii.textContent = tok; ii.style.setProperty("--i", i++);
+              if (cls) ii.className = cls;
+              w.appendChild(ii); frag.appendChild(w);
+            });
+            n.replaceWith(frag);
+          } else if (n.nodeType === 1) {
+            walk(n, n.classList.contains("serif") ? "serif" : cls);
+            n.replaceWith(...n.childNodes);
+          }
+        });
+      };
+      walk(el, "");
+    }
+    document.querySelectorAll(".sec-head h2, .cta h2").forEach(splitWords);
+
+    /* Ripple */
+    document.addEventListener("pointerdown", e => {
+      if (reduce) return;
+      const t = e.target.closest(".btn, .check-btn, .role, .close, .menu-btn");
+      if (!t) return;
+      const r = t.getBoundingClientRect(), s = Math.max(r.width, r.height) * 2;
+      const d = document.createElement("span");
+      d.className = "ripple";
+      d.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left - s / 2}px;top:${e.clientY - r.top - s / 2}px`;
+      t.appendChild(d);
+      setTimeout(() => d.remove(), 800);
+    });
+
+    /* Magnit tugmalar + maxsus kursor */
+    if (finePointer && !reduce) {
+      document.querySelectorAll(".mag").forEach(el => {
+        el.addEventListener("pointermove", e => {
+          const r = el.getBoundingClientRect();
+          el.style.transform = `translate(${(e.clientX - (r.left + r.width / 2)) * .22}px, ${(e.clientY - (r.top + r.height / 2)) * .3}px)`;
+        });
+        el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+      });
+
+      const ring = document.getElementById("cursor");
+      let cx = -100, cy = -100, tx = cx, ty = cy;
+      addEventListener("pointermove", e => { tx = e.clientX; ty = e.clientY; ring.style.opacity = 1; });
+      document.addEventListener("pointerover", e => { ring.classList.toggle("big", !!e.target.closest("a, button, .row")); });
+      document.addEventListener("pointerleave", () => { ring.style.opacity = 0; });
+      (function loop() {
+        const ddx = tx - cx, ddy = ty - cy;
+        if (Math.abs(ddx) > .1 || Math.abs(ddy) > .1) {
+          cx += ddx * .18; cy += ddy * .18;
+          ring.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    /* ═════════ Yangi motion: scroll hikoyalari ═════════ */
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+    const fillSec = document.getElementById("fill");
+    const fillText = document.getElementById("fillText");
+    const storySec = document.getElementById("kun");
+    const storyLine = storySec.querySelector(".st-line");
+    const stSteps = [...storySec.querySelectorAll(".st")];
+    const phoneScreens = [...storySec.querySelectorAll(".ps")];
+    const liveCard = document.getElementById("liveCard");
+    const tickerSkew = document.querySelector(".ticker-skew");
+    const fillNodes = [...fillSec.querySelectorAll(".node")];
+
+    /* "Bu nima?" matni — so'zlarga bo'linadi, scroll bilan to'ladi */
+    const fillWords = [];
+    (function () {
+      const walk = (node, hl) => {
+        [...node.childNodes].forEach(n => {
+          if (n.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(tok => {
+              if (!tok) return;
+              if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(" ")); return; }
+              const s = document.createElement("span");
+              s.className = "sf" + (hl ? " hl" : ""); s.textContent = tok;
+              fillWords.push(s); frag.appendChild(s);
+            });
+            n.replaceWith(frag);
+          } else if (n.nodeType === 1) {
+            walk(n, n.tagName === "EM");
+            n.replaceWith(...n.childNodes);
+          }
+        });
+      };
+      walk(fillText, false);
+    })();
+
+    let skewVel = 0, lastY = scrollY, skewRaf = 0;
+    function skewLoop() {
+      skewVel *= .88;
+      tickerSkew.style.transform = `skewX(${(-skewVel * .09).toFixed(2)}deg)`;
+      if (Math.abs(skewVel) > .05) skewRaf = requestAnimationFrame(skewLoop);
+      else { skewRaf = 0; tickerSkew.style.transform = ""; }
+    }
+
+    let lastLit = -1, lastP1 = -1, lastP2 = -1, lastS = -1, lastIdx = -1;
+    function scrollFx(y, rFill, rLive, rStory) {
+      /* Ticker tezlikka qarab egiladi */
+      const dv = y - lastY; lastY = y;
+      if (Math.abs(dv) > 1) { skewVel = Math.max(-60, Math.min(60, skewVel * .5 + dv)); if (!skewRaf) skewRaf = requestAnimationFrame(skewLoop); }
+
+      /* Matn to'lishi */
+      let p = clamp01(-rFill.top / (rFill.height - innerHeight));
+      const lit = Math.floor(clamp01(p * 1.25 - .06) * fillWords.length);
+      if (lit !== lastLit) { fillWords.forEach((w, i) => w.classList.toggle("on", i < lit)); lastLit = lit; }
+      const p1 = Math.round(p * 500) / 500;
+      if (p1 !== lastP1) { fillFlow.style.setProperty("--p", p1); lastP1 = p1; }
+      fillNodes.forEach((n, i) => n.classList.toggle("on", p > [.08, .38, .7][i]));
+
+      /* Jonli davomat kartasi kattalashadi */
+      const sc = Math.round((.9 + .1 * clamp01(1 - rLive.top / (innerHeight * .9))) * 500) / 500;
+      if (sc !== lastS) { liveCard.style.setProperty("--s", sc); lastS = sc; }
+
+      /* Telefon hikoyasi */
+      p = clamp01(-rStory.top / (rStory.height - innerHeight));
+      const p2 = Math.round(p * 500) / 500;
+      if (p2 !== lastP2) { phoneEl.style.setProperty("--p", p2); storyLine.style.setProperty("--p", p2); lastP2 = p2; }
+      const idx = Math.min(2, Math.floor(p * 3));
+      if (idx !== lastIdx) {
+        stSteps.forEach((s, i) => s.classList.toggle("active", i === idx));
+        phoneScreens.forEach((s, i) => s.classList.toggle("active", i === idx));
+        lastIdx = idx;
+      }
+    }
+
+    /* Jonli davomat: ko'ringanda kataklar to'ladi */
+    new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); o.unobserve(e.target); } }), { threshold: .3 })
+      .observe(liveCard);
+
+    /* Savollar (accordion) */
+    document.querySelectorAll(".faq-q").forEach(b => b.addEventListener("click", () => {
+      const item = b.parentElement, open = !item.classList.contains("open");
+      document.querySelectorAll(".faq-item.open").forEach(i => { i.classList.remove("open"); i.firstElementChild.setAttribute("aria-expanded", false); });
+      if (open) { item.classList.add("open"); b.setAttribute("aria-expanded", true); }
+    }));
+
+    /* Hero sarlavha: harflar kursorga javob beradi */
+    const heroChars = [];
+    document.querySelectorAll(".hero-title .w > i").forEach(el => {
+      const txt = el.textContent.replace(/ /g, " ");
+      el.textContent = "";
+      [...txt].forEach(c => {
+        const s = document.createElement("span");
+        s.className = "ch"; s.textContent = c === " " ? " " : c;
+        el.appendChild(s); heroChars.push(s);
+      });
+    });
+
+    if (finePointer && !reduce) {
+      const shapes = [...document.querySelectorAll(".shape")];
+      const ring = document.getElementById("cursor");
+      let charPos = [], lastF = [], lastMeasure = -9999, mx = 0, my = 0, pmRaf = 0;
+      function measureChars() {
+        charPos = heroChars.map(c => { const b = c.getBoundingClientRect(); return { x: b.left + b.width / 2 + scrollX, y: b.top + b.height / 2 + scrollY - titleTy }; });
+        lastMeasure = performance.now();
+      }
+      addEventListener("resize", () => { lastMeasure = -9999; });
+      function pmFrame() {
+        pmRaf = 0;
+        if (scrollY >= innerHeight * 1.2) return;
+        if (performance.now() - lastMeasure > 1200) measureChars();
+        const px = mx + scrollX, py = my + scrollY;
+        for (let i = 0; i < heroChars.length; i++) {
+          const q = charPos[i];
+          const f = Math.max(0, 1 - Math.hypot(px - q.x, py - (q.y + titleTy)) / 190);
+          if (Math.abs(f - (lastF[i] ?? -1)) > .015) { heroChars[i].style.setProperty("--f", f.toFixed(3)); lastF[i] = f; }
+        }
+        const nx = mx / innerWidth - .5, ny = my / innerHeight - .5;
+        shapes.forEach(s => { const d = +s.dataset.depth; s.style.translate = `${nx * d}px ${ny * d}px`; });
+      }
+      addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; if (!pmRaf) pmRaf = requestAnimationFrame(pmFrame); }, { passive: true });
+      /* Kartalar 3D egiladi + yorug'lik */
+      document.querySelectorAll(".aud-card").forEach(card => {
+        const inner = card.firstElementChild;
+        card.addEventListener("pointermove", e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          inner.style.setProperty("--rx", ((x - .5) * 10).toFixed(2) + "deg");
+          inner.style.setProperty("--ry", ((.5 - y) * 8).toFixed(2) + "deg");
+          inner.style.setProperty("--gx", (x * 100) + "%"); inner.style.setProperty("--gy", (y * 100) + "%");
+        });
+        card.addEventListener("pointerleave", () => { inner.style.setProperty("--rx", "0deg"); inner.style.setProperty("--ry", "0deg"); });
+      });
+      /* Kursor yozuvi */
+      document.addEventListener("pointerover", e => {
+        const t = e.target.closest("[data-cursor]");
+        ring.classList.toggle("lbl", !!t);
+        ring.textContent = t ? t.dataset.cursor : "";
+        if (t) ring.classList.remove("big");
+      });
+    }
+
+
+    /* Parallax elementlari (hisob-kitob frame() ichida) */
+    const pitems = [];
+    [[".sec-head", .07], [".step-card .big", .1], [".live-right", .06], [".stat b", .05], [".badge", -.1], [".hero-lead", -.04], [".aud-ic", -.05]]
+      .forEach(([sel, k]) => document.querySelectorAll(sel).forEach(el => pitems.push({ el, k, ty: 0 })));
+    const htitle = document.querySelector(".hero-title");
+    const badgeEl = document.querySelector(".badge");
+    const phoneEl = storySec.querySelector(".phone");
+    const fillFlow = fillSec.querySelector(".fill-flow");
+
+    frame();
+
+    /* Loader → sahifa ochilishi */
+    let ready = false;
+    function onReady() {
+      if (ready) return;
+      ready = true;
+      document.body.classList.add("ready");
+    }
+    (function runLoader() {
+      const loader = document.getElementById("loader");
+      const lbar = document.getElementById("lbar");
+      const lnum = document.getElementById("lnum");
+      const minMs = reduce ? 200 : 2000;
+      const t0 = performance.now();
+      let loaded = document.readyState === "complete";
+      addEventListener("load", () => { loaded = true; });
+      function finish() {
+        loader.classList.add("done");
+        setTimeout(onReady, reduce ? 0 : 650);
+        setTimeout(() => loader.classList.add("gone"), reduce ? 0 : 1500);
+      }
+      function step(now) {
+        const t = Math.min((now - t0) / minMs, 1);
+        const base = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const p = loaded ? base : Math.min(base, .9);
+        lbar.style.transform = `scaleX(${p})`;
+        lnum.textContent = Math.round(p * 100);
+        if (p >= 1) finish(); else requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  </script>
+</body>
+</html>
